@@ -14,7 +14,8 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, UploadFile, File, HTTPException
 
 from models.vehicle import OCRReadResponse, QRGenerateRequest, QRGenerateResponse
-from services import ocr_service, qr_service
+from services.ocr_service import read_plate_from_image
+from services.qr_service import generate_qr_token, generate_qr_image_base64
 
 logger = logging.getLogger("neuropark.routes.vehicles")
 
@@ -57,7 +58,7 @@ async def read_plate(file: UploadFile = File(...)):
         )
 
     try:
-        result = ocr_service.read_plate_from_image(image_bytes)
+        result = read_plate_from_image(image_bytes)
         return OCRReadResponse(**result)
     except RuntimeError as exc:
         # A RuntimeError from ocr_service means something structurally
@@ -77,8 +78,8 @@ async def generate_qr(payload: QRGenerateRequest):
     Week 1.2's /vehicles/entry endpoint.
     """
     try:
-        token = qr_service.generate_qr_token()
-        qr_image = qr_service.generate_qr_image_base64(token)
+        token = generate_qr_token()
+        qr_image = generate_qr_image_base64(token)
 
         return QRGenerateResponse(
             qr_token=token,

@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  /* Prevents the iOS/Android "double tap to zoom" gesture from firing
+     on rapid taps during the entry flow — this app gets used quickly,
+     one-handed, dozens of times a shift. */
+  touch-action: manipulation;
+}
