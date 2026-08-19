@@ -1,0 +1,23 @@
+# --- Web framework ---
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-multipart==0.0.19   # required by FastAPI to parse UploadFile (image uploads)
+
+# --- Config ---
+python-dotenv==1.0.1
+
+# --- Database ---
+motor==3.6.0                # async MongoDB driver used in main.py's lifespan
+pymongo==4.9.2               # motor's underlying driver, pinned for compatibility
+
+# --- OCR ---
+easyocr==1.7.2               # pulls in torch/torchvision automatically (CPU build)
+opencv-python-headless==4.10.0.84   # headless: no GUI deps needed on a server
+numpy==1.26.4                # pinned <2.0: easyocr/opencv compatibility
+
+# --- QR codes ---
+qrcode[pil]==7.4.2           # [pil] extra is required — without it, image rendering fails
+pillow==10.4.0
+
+# --- Cache (wired up starting Week 3.1, included now so .env's REDIS_URL is ready to use) ---
+redis==5.2.0
